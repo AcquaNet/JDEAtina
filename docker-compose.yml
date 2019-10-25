@@ -11,7 +11,7 @@ services:
     ports:
      - "${JDE_MICROSERVER_PORT}:${JDE_MICROSERVER_PORT}"
     volumes:
-     - /config:/tmp
+     - /tmp/config:/tmp
     user: root
     networks:
       atinanet:
