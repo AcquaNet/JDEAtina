@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "51ef28bc-8db4-4ff9-b1b2-cdc02e861b8c",
+		"name": "ATINA DOCKER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NGROK Check Status http://192.168.99.100:4040",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.99.100:4040",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "4040"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-authorization",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.99.100:8081/api/jde-atina/get-authorization",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"jde-atina",
+						"get-authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Execute WS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTczMDU1MzY2LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6LTEyNjc2MDAxMzYsImV4cCI6MTU3MzA1NTY2Nn0.UYK4NeWN1UugNczDzbFv_JUtNjEy5GndGc7oIxNFpW4",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"approver\": {\r\n        \"entityTaxId\": \"\",\r\n        \"entityLongId\": \"\",\r\n        \"entityId\": 533095\r\n    },\r\n    \"orderTypeCode\": \"OP\",\r\n    \"businessUnitCode\": \"         30\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"statusApproval\": \"2N\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.99.100:8081/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"jde-atina",
+						"post-operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-json-schema",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyOTg0OTQ4LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6LTEzNjg0MjUxODksImV4cCI6MTU3Mjk4NTI0OH0.hgSNm8qSxyf6GyUklEQPScIUTGn4l1U0jfTru-aGjSc",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.99.100/api/jde-atina/get-json-schema/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP410000.InventoryManager.getItemPrice"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
