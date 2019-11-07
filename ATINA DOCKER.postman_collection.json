@@ -1,38 +1,32 @@
 {
 	"info": {
-		"_postman_id": "51ef28bc-8db4-4ff9-b1b2-cdc02e861b8c",
+		"_postman_id": "a27fc1ec-d190-437a-bcb8-3ac13ce29bf5",
 		"name": "ATINA DOCKER",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "NGROK Check Status http://192.168.99.100:4040",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://192.168.99.100:4040",
-					"protocol": "http",
-					"host": [
-						"192",
-						"168",
-						"99",
-						"100"
-					],
-					"port": "4040"
+			"name": "NGROK Check Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8957fd23-f568-41c0-9f24-f8fa5c3e7813",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"ngrok-id\", jsonData.public_url);"
+						],
+						"type": "text/javascript"
+					}
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "get-authorization",
+			],
 			"request": {
 				"auth": {
 					"type": "apikey",
 					"apikey": [
 						{
 							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -45,15 +39,59 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.99.100:8081/api/jde-atina/get-authorization",
+					"raw": "http://{{docker-machine-ip}}:4040/api/tunnels/command_line (http)",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"99",
-						"100"
+						"{{docker-machine-ip}}"
 					],
-					"port": "8081",
+					"port": "4040",
+					"path": [
+						"api",
+						"tunnels",
+						"command_line (http)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"first-token\", jsonData.public_url);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ngrok-id}}/api/jde-atina/get-authorization",
+					"host": [
+						"{{ngrok-id}}"
+					],
 					"path": [
 						"api",
 						"jde-atina",
@@ -65,13 +103,27 @@
 		},
 		{
 			"name": "Execute WS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
+						"exec": [
+							"var jsonData = postman.getResponseHeader(\"token\");",
+							"pm.collectionVariables.set(\"first-token\",jsonData );",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "apikey",
 					"apikey": [
 						{
 							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTczMDU1MzY2LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6LTEyNjc2MDAxMzYsImV4cCI6MTU3MzA1NTY2Nn0.UYK4NeWN1UugNczDzbFv_JUtNjEy5GndGc7oIxNFpW4",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -100,15 +152,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.99.100:8081/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
-					"protocol": "http",
+					"raw": "{{ngrok-id}}/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
 					"host": [
-						"192",
-						"168",
-						"99",
-						"100"
+						"{{ngrok-id}}"
 					],
-					"port": "8081",
 					"path": [
 						"api",
 						"jde-atina",
@@ -121,13 +168,25 @@
 		},
 		{
 			"name": "get-json-schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63f3e1de-7a5f-4349-bc4b-96b67b20a13d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "apikey",
 					"apikey": [
 						{
 							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyOTg0OTQ4LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6LTEzNjg0MjUxODksImV4cCI6MTU3Mjk4NTI0OH0.hgSNm8qSxyf6GyUklEQPScIUTGn4l1U0jfTru-aGjSc",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -140,13 +199,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.99.100/api/jde-atina/get-json-schema/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
-					"protocol": "http",
+					"raw": "{{ngrok-id}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
 					"host": [
-						"192",
-						"168",
-						"99",
-						"100"
+						"{{ngrok-id}}"
 					],
 					"path": [
 						"api",
@@ -157,6 +212,48 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4b20e110-fd92-493f-8a9f-8bbc6af88541",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "714cf980-85e0-4816-b49e-2ea5fd7230ec",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "da9e8c07-7d54-4bc8-be1a-2a4b805e4603",
+			"key": "docker-machine-ip",
+			"value": "192.168.99.100",
+			"type": "string"
+		},
+		{
+			"id": "cd9bdd34-4e9a-4e7a-aa71-aee5ceb8b353",
+			"key": "ngrok-id",
+			"value": "http://7e14687a.ngrok.io",
+			"type": "string"
+		},
+		{
+			"id": "3866079a-65ad-46e5-9cd8-70cea38ce19d",
+			"key": "first-token",
+			"value": null,
+			"type": "any"
 		}
 	],
 	"protocolProfileBehavior": {}
