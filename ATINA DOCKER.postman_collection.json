@@ -63,7 +63,7 @@
 						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
-							"pm.collectionVariables.set(\"first-token\", jsonData.public_url);"
+							"pm.collectionVariables.set(\"first-token\", jsonData.Token);"
 						],
 						"type": "text/javascript"
 					}
