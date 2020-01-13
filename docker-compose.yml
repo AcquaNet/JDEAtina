@@ -5,12 +5,12 @@ services:
     image: 92455890/mule-server:1.0.0
     environment:
       jdeAtinaVersion: ${jdeAtinaVersion}
-      JDE_USER: ${JDE_USER}
-      JDE_PASSWORD: ${JDE_PASSWORD}
-      JDE_ENVIRONMENT: ${JDE_ENVIRONMENT}
-      JDE_ROLE: ${JDE_ROLE}
-      JDE_ATINA_SERVER_NAME: ${JDE_ATINA_SERVER_NAME}
-      JDE_ATINA_SERVER_PORT: ${JDE_ATINA_SERVER_PORT} 
+      JDE_CONNECTOR_USER: ${JDE_CONNECTOR_USER}
+      JDE_CONNECTOR_PASSWORD: ${JDE_CONNECTOR_PASSWORD}
+      JDE_CONNECTOR_ENVIRONMENT: ${JDE_CONNECTOR_ENVIRONMENT}
+      JDE_CONNECTOR_ROLE: ${JDE_CONNECTOR_ROLE}
+      JDE_CONNECTOR_MICROSERVER_NAME: ${JDE_CONNECTOR_MICROSERVER_NAME}
+      JDE_CONNECTOR_MICROSERVER_PORT: ${JDE_CONNECTOR_MICROSERVER_PORT} 
       dragon_shopify_smtp_host: ${dragon_shopify_smtp_host}
       dragon_shopify_smtp_port: ${dragon_shopify_smtp_port}
       dragon_shopify_smtp_user: ${dragon_shopify_smtp_user}
@@ -22,22 +22,39 @@ services:
       metrics_graphite_enable: ${metrics_graphite_enable}
       metrics_graphite_server: ${metrics_graphite_server}
       metrics_graphite_port: ${metrics_graphite_port}
+      REPOSITORY_PROTOCOL: ${REPOSITORY_PROTOCOL}
+      REPOSITORY_URL: ${REPOSITORY_URL}
     container_name: mule-server
-    depends_on:
+    depends_on: 
      - ngrok-server
     ports:
      - "8083:8083"
-     - "8081:8081"
+     - "8084:8084"
+     - "8088:8081"
      - "8161:8161"
     volumes:
      - /tmp/docker/mule-server/logs:/opt/mule/mule-standalone-390/logs
      - /tmp/docker/mule-server/apps:/opt/mule/mule-standalone-390/apps
     links:
      - ngrok-server:ngrok-server
+     - jde-microserver:jde-microserver
     user: root
     networks:
-      integradornet:
-        ipv4_address: 172.29.0.5
+      atinacloud:
+        ipv4_address: 172.28.0.3
+
+  ngrok-server:
+    image: 92455890/ngrok-server:1.0.0
+    environment:
+      NGROK_MULE_SERVER_TOKEN: ${NGROK_MULE_SERVER_TOKEN}
+      NGROK_MULE_SERVER_HOST: ${NGROK_MULE_SERVER_HOST}
+      NGROK_MULE_SERVER_PORT: ${NGROK_MULE_SERVER_PORT}
+    ports:
+      - "4041:4040"
+    container_name: ngrok-server
+    networks:
+      atinacloud:
+        ipv4_address: 172.28.0.2    
 
   jde-microserver:
     image: 92455890/jdeatina-microserver:1.0.0
@@ -49,7 +66,11 @@ services:
       JDE_MICROSERVER_STD_WEB_SERVICE: ${JDE_MICROSERVER_STD_WEB_SERVICE}
       JDE_MICROSERVER_SECRET_KEY: ${JDE_MICROSERVER_SECRET_KEY}
       JDE_MICROSERVER_TOKEN_EXPIRATION: ${JDE_MICROSERVER_TOKEN_EXPIRATION}
+      REPOSITORY_PROTOCOL: ${REPOSITORY_PROTOCOL}
+      REPOSITORY_URL: ${REPOSITORY_URL}
     container_name: jdeatina-microserver
+    depends_on: 
+     - ngrok-microserver
     ports:
      - "${JDE_MICROSERVER_PORT}:${JDE_MICROSERVER_PORT}"
     volumes:
@@ -57,27 +78,27 @@ services:
      - /tmp/jde/lib:/tmp/jde/lib
     user: root
     networks:
-      integradornet:
-        ipv4_address: 172.29.0.3
+      atinacloud:
+        ipv4_address: 172.28.0.7
     restart: always 
-        
-  ngrok-server:
-    image: 92455890/ngrok-server:1.0.0
+
+  ngrok-microserver:
+    image: 92455890/ngrok-microserver:1.0.0
     environment:
-      NGROK_NGROK_TOKEN: ${NGROK_NGROK_TOKEN}
-      NGROK_MULE_SERVER_HOST: ${NGROK_MULE_SERVER_HOST}
-      NGROK_MULE_SERVER_PORT: ${NGROK_MULE_SERVER_PORT}
+      NGROK_MICROSERVER_TOKEN: ${NGROK_MICROSERVER_TOKEN}
+      NGROK_MICROSERVER_HOST: ${NGROK_MICROSERVER_HOST}
+      NGROK_MICROSERVER_PORT: ${NGROK_MICROSERVER_PORT}
     ports:
       - "4040:4040"
-    container_name: ngrok-server
+    container_name: ngrok-microserver
     networks:
-      integradornet:
-        ipv4_address: 172.29.0.2    
+      atinacloud:
+        ipv4_address: 172.28.0.6        
     
 networks:
-  integradornet:
+  atinacloud:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.29.0.0/16
-         gateway: 172.29.0.1
+       - subnet: 172.28.0.0/16
+         gateway: 172.28.0.1
