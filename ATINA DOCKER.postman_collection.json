@@ -6,15 +6,81 @@
 	},
 	"item": [
 		{
-			"name": "S00 - SYSTEM - get-authorization",
+			"name": "S00 - SYSTEM - get-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c730c595-e95d-49d3-8e26-0671efd69e01",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"first-token\", jsonData.token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "transactionID",
+						"value": "20200229180140005",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"JDE User\": \"JDE\",\r\n  \"JDE Password\": \"Modus2020!\",\r\n  \"JDE Environment\": \"JDV920\",\r\n  \"JDE Role\": \"*ALL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-token",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S01 - SYSTEM - get-authorization",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"pm.environment.set(\"first-token\", jsonData.token);"
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", jsonData.token);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -26,7 +92,7 @@
 					"apikey": [
 						{
 							"key": "value",
-							"value": "{{valid-token}}",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -37,7 +103,13 @@
 					]
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140004"
+					}
+				],
 				"url": {
 					"raw": "{{system-layer}}/api/jde-atina/get-authorization",
 					"host": [
@@ -53,12 +125,118 @@
 			"response": []
 		},
 		{
-			"name": "P03 - PROCESS - get-purchase-orders-for-approver",
+			"name": "S02 - SYSTEM - get-json-schema - JP410000.InventoryManager.getItemPrice",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"id": "714396b8-57ba-4efb-8bdc-1b6408755157",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP410000.InventoryManager.getItemPrice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S03 - SYSTEM - get-json-schema - JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc5370e3-cbd1-45fb-8354-dc09ce99504f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S04 - SYSTEM - Execute WS JP410000.InventoryManager.getItemPrice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ec6f73d-fc08-45ad-bad7-4f85e94102a8",
 						"exec": [
 							"pm.test(\"Status code is 200\", function() {",
 							"  pm.expect(pm.response.code).to.equal(200);",
@@ -95,11 +273,16 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
+					},
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140011"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"entityId\": 1\r\n}",
+					"raw": "{\r\n    \"item\": {\r\n        \"itemId\": 60003,\r\n        \"itemUOMSecondary\": \"\",\r\n        \"itemProduct\":  \"\",\r\n        \"itemCustomer\":  \"\",\r\n        \"itemCatalog\":  \"\",\r\n        \"itemDescription\":  \"\",\r\n        \"itemFreeForm\":  \"\",\r\n        \"itemUOMPrimary\":  \"\"\r\n    },\r\n    \"branchPlantList\": \"          10\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,30 +290,35 @@
 					}
 				},
 				"url": {
-					"raw": "{{process-layer}}/api/jde-atina/get-purchase-orders-for-approver",
+					"raw": "{{system-layer}}/api/jde-atina/post-operation/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
 					"host": [
-						"{{process-layer}}"
+						"{{system-layer}}"
 					],
 					"path": [
 						"api",
 						"jde-atina",
-						"get-purchase-orders-for-approver"
+						"post-operation",
+						"oracle.e1.bssv.JP410000.InventoryManager.getItemPrice"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "S04 - SYSTEM - Execute WS JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+			"name": "S05 - SYSTEM - Execute WS JP430000.ProcurementManager.getPurchaseOrdersForApprover",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
 						"exec": [
-							"var jsonData = postman.getResponseHeader(\"token\");",
-							"pm.environment.set(\"first-token\",jsonData );",
-							""
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", jsonData.token);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -142,7 +330,7 @@
 					"apikey": [
 						{
 							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTc5MDE2NjUxLCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MTI4NDM5NjEzMywiZXhwIjoxNTc5MDE5NjUxfQ.rw9lUZgN9cDmjRki-T6okZqxABWdVXD5wA9T8YtrWJQ",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -158,6 +346,11 @@
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "transactionID",
+						"value": "20200229180140011",
 						"type": "text"
 					}
 				],
@@ -186,16 +379,81 @@
 			"response": []
 		},
 		{
-			"name": "S03 -  SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"name": "S06 - SYSTEM - get-token For Approval",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d123afb-e93f-4dec-a589-b15e741b0c16",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"first-token\", jsonData.token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"JDE User\": \"MULESOFT\",\r\n  \"JDE Password\": \"Modus2020!\",\r\n  \"JDE Environment\": \"JDV920\",\r\n  \"JDE Role\": \"*ALL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-token",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S07 -  SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject APPROVE",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
 						"exec": [
-							"var jsonData = postman.getResponseHeader(\"token\");",
-							"pm.environment.set(\"first-token\",jsonData );",
-							""
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", jsonData.token);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -224,11 +482,16 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
+					},
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140012"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"p43081Version\": \"ZJDE0002\",\r\n  \"businessUnit\": \"          30\",\r\n  \"companyKeyOrderNumber\": \"00001\",\r\n  \"documentType\": \"OP\",\r\n  \"documentNumber\": 5054,\r\n  \"orderSuffix\": \"001\",\r\n  \"remark\": \"REM1\",\r\n  \"statusApproval\": \"2A\",\r\n  \"budgetPassword\": \"\",\r\n  \"amountToApprove\": \"10606.94\",\r\n  \"holdCode\": \"\",\r\n  \"approveReject\": \"A\",\r\n  \"approverAddressNumber\": 1,\r\n  \"lineNumber\": \"1\",\r\n  \"approvalRouteCode\": \"DEMO\"\r\n}",
+					"raw": "{\r\n  \"p43081Version\": \"ZJDE0002\",\r\n  \"businessUnit\": \"          30\",\r\n  \"companyKeyOrderNumber\": \"00001\",\r\n  \"documentType\": \"OP\",\r\n  \"documentNumber\": 5041,\r\n  \"orderSuffix\": \"001\",\r\n  \"remark\": \"Aprovado\",\r\n  \"statusApproval\": \"2A\",\r\n  \"budgetPassword\": \"\",\r\n  \"amountToApprove\": \"876755.00\",\r\n  \"holdCode\": \"\",\r\n  \"approveReject\": \"A\",\r\n  \"approverAddressNumber\": 92455890,\r\n  \"lineNumber\": \"1\",\r\n  \"approvalRouteCode\": \"DEMO\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -251,7 +514,7 @@
 			"response": []
 		},
 		{
-			"name": "S02 - SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"name": "S07 - SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject REJECT",
 			"event": [
 				{
 					"listen": "test",
@@ -320,14 +583,20 @@
 			"response": []
 		},
 		{
-			"name": "S01 - DOCKER - SYSTEM - get-json-schema",
+			"name": "P00 - SYSTEM - get-valid-token for JDE",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "63f3e1de-7a5f-4349-bc4b-96b67b20a13d",
+						"id": "15441348-d92a-40ce-b753-627c3a7e24e3",
 						"exec": [
-							""
+							"pm.test(\"Status code is 200\", function() {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"first-token\", jsonData.token);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -335,39 +604,47 @@
 			],
 			"request": {
 				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "{{first-token}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "token",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"JDE User\": \"JDE\",\r\n  \"JDE Password\": \"Modus2020!\",\r\n  \"JDE Environment\": \"JDV920\",\r\n  \"JDE Role\": \"*ALL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{system-layer-docker}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"raw": "{{system-layer}}/api/jde-atina/get-token",
 					"host": [
-						"{{system-layer-docker}}"
+						"{{system-layer}}"
 					],
 					"path": [
 						"api",
 						"jde-atina",
-						"get-json-schema",
-						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+						"get-token"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "P02 - PROCESS get-authorization",
+			"name": "P01 - PROCESS get-authorization For JDE User",
 			"event": [
 				{
 					"listen": "test",
@@ -392,7 +669,7 @@
 					"apikey": [
 						{
 							"key": "value",
-							"value": "{{valid-token}}",
+							"value": "{{first-token}}",
 							"type": "string"
 						},
 						{
@@ -413,6 +690,294 @@
 						"api",
 						"jde-atina",
 						"get-authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P02 - PROCESS - get-purchase-orders-for-approver",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"approver\": {\r\n        \"entityTaxId\": \"\",\r\n        \"entityLongId\": \"\",\r\n        \"entityId\": 92455890\r\n    },\r\n    \"orderTypeCode\": \"OP\",\r\n    \"businessUnitCode\": \"         30\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"statusApproval\": \"2N\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P03 - PROCESS - oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9bc55b01-c838-49cc-aad6-6e5da891e6de",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"companyKeyOrderNo\": \"00001\",\r\n    \"documentOrderTypeCode\": \"OP\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"documentOrderInvoiceNumber\": 5054,\r\n    \"documentSuffix\": \"000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P04 - PROCESS - APRROVE - oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ffe576e3-c40c-4396-8525-5016cc99cb62",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": \"5056\",\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Aprovado\",\r\n    \"statusApproval\": \"2A\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": 1052106.00,\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"A\",\r\n    \"approverAddressNumber\": \"92455890\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"OP\",\r\n            \"orderNumber\": 5056,\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado1\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"00001\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P05 - PROCESS - REJECT- oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed5a0baf-3d91-4bdf-b7dc-ca512407711c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": \"5054\",\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Rejected\",\r\n    \"statusApproval\": \"2N\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": 876755.00,\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"R\",\r\n    \"approverAddressNumber\": \"92455890\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"OP\",\r\n            \"orderNumber\": 5041,\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"00001\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
 					]
 				}
 			},
@@ -498,142 +1063,6 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "P05 - PROCESS - purchase-orders-approve-reject",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
-						"exec": [
-							"pm.test(\"Status code is 200\", function() {",
-							"  pm.expect(pm.response.code).to.equal(200);",
-							"});",
-							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    pm.environment.set(\"first-token\", jsonData.token);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "{{first-token}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "token",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": \"5073\",\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"REJECT REMARK 1\",\r\n    \"statusApproval\": \"2A\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": \"10606.94\",\r\n    \"approveReject\": \"A\",\r\n    \"approverAddressNumber\": \"1\",\r\n    \"lineNumber\": \"1.0\",\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}\r\n\r\n ",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{process-layer}}/api/jde-atina/process-purchase-order-approve-reject",
-					"host": [
-						"{{process-layer}}"
-					],
-					"path": [
-						"api",
-						"jde-atina",
-						"process-purchase-order-approve-reject"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "P04 - PROCESS - get-purchase-order-detail-for-approver",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
-						"exec": [
-							"pm.test(\"Status code is 200\", function() {",
-							"  pm.expect(pm.response.code).to.equal(200);",
-							"});",
-							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    pm.environment.set(\"first-token\", jsonData.token);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "{{first-token}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "token",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"companyKeyOrderNo\": \"00001\",\r\n    \"documentOrderTypeCode\": \"OP\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"documentOrderInvoiceNumber\": 5063,\r\n    \"documentSuffix\": \"000\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{process-layer}}/api/jde-atina/get-purchase-order-detail-for-approver",
-					"host": [
-						"{{process-layer}}"
-					],
-					"path": [
-						"api",
-						"jde-atina",
-						"get-purchase-order-detail-for-approver"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -660,76 +1089,64 @@
 	],
 	"variable": [
 		{
-			"id": "99a690f0-2dbb-4c8f-b16d-ccbc87ec9853",
+			"id": "0dd51743-2b26-4767-8e61-78808269dd28",
 			"key": "docker-machine-ip",
-			"value": "192.168.99.100",
-			"type": "string"
+			"value": "192.168.99.100"
 		},
 		{
-			"id": "da26a740-b32f-4430-a810-a4ca2b776227",
+			"id": "491d8a93-e17d-4cda-8080-e7101c69119f",
 			"key": "ngrok-mule-server-id",
-			"value": "http://df9d346a.ngrok.io",
-			"type": "string"
+			"value": "http://df9d346a.ngrok.io"
 		},
 		{
-			"id": "b4a01933-7f69-4724-8ff6-006bcb5e2b95",
+			"id": "cffe33d0-b4f7-4312-9c9f-4c304dc437f3",
 			"key": "first-token",
-			"value": null,
-			"type": "any"
+			"value": null
 		},
 		{
-			"id": "4ff0242c-71c9-4f7e-a47d-d032c091b819",
+			"id": "122a36df-8e4c-48dc-98b4-2fe261217f87",
 			"key": "valid-token",
-			"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o",
-			"type": "string"
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o"
 		},
 		{
-			"id": "43f6ebf8-d733-4baa-b5be-34e2f9213f35",
+			"id": "9bb2919a-70f2-4307-b208-58b55958b70c",
 			"key": "ngrok-id-process",
-			"value": "http://192.168.99.100:8084",
-			"type": "string"
+			"value": "http://192.168.99.100:8084"
 		},
 		{
-			"id": "f5dbfe0c-962c-4cf2-b593-d22ce6ccc7a2",
+			"id": "01650fd1-6e75-4309-8c3d-53daecc6b02e",
 			"key": "local-process-layer",
-			"value": "http://localhost:8084",
-			"type": "string"
+			"value": "http://localhost:8084"
 		},
 		{
-			"id": "caeedf34-9e07-4a2d-8296-153cd60e2255",
+			"id": "e66a9d07-8121-4199-af6a-b1d6522ead15",
 			"key": "ngrok-mule-server",
-			"value": "http://192.168.99.100:4041",
-			"type": "string"
+			"value": "http://192.168.99.100:4041"
 		},
 		{
-			"id": "22493583-3177-4bd6-a7aa-aa29aa54a65e",
+			"id": "56bba758-73a6-4368-9c77-4089f4d0c1c7",
 			"key": "ngrok-jde-microserver",
-			"value": "http://192.168.99.100:4040",
-			"type": "string"
+			"value": "http://192.168.99.100:4040"
 		},
 		{
-			"id": "0e281567-71c0-460b-913c-27f5bdfaa5e8",
+			"id": "d1ba86c1-9b61-4e80-ac1e-5f150a041cd9",
 			"key": "ngrok-jdemicroserver-id",
-			"value": "http://52f0160f.ngrok.io",
-			"type": "string"
+			"value": "http://aee1c5f3.ngrok.io"
 		},
 		{
-			"id": "525c1285-d321-4729-bd12-de9a510ee9e9",
+			"id": "733edb21-fbe0-433f-bbf2-bd72d9e5b155",
 			"key": "docker-system-layer",
-			"value": "http://192.168.99.100:8088",
-			"type": "string"
+			"value": "http://192.168.99.100:8088"
 		},
 		{
-			"id": "26663ad9-eb7d-4198-89c7-8be0f33c519f",
+			"id": "ea0dbf7d-90e0-48a3-a4cd-02f40f00cefa",
 			"key": "local-system-layer",
-			"value": "http://localhost:8081",
-			"type": "string"
+			"value": "http://localhost:8081"
 		},
 		{
-			"id": "24537cec-28ef-4b20-9339-49415c5d1fb1",
+			"id": "b89ee50d-6bff-4bdd-a7f6-9ac143302ee5",
 			"key": "process-layer",
-			"value": "http://df9d346a.ngrok.io",
-			"type": "string"
+			"value": "http://df9d346a.ngrok.io"
 		}
 	],
 	"protocolProfileBehavior": {}
