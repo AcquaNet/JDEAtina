@@ -1,0 +1,954 @@
+{
+	"info": {
+		"_postman_id": "a27fc1ec-d190-437a-bcb8-3ac13ce29bf5",
+		"name": "ATINA DOCKER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SYSTEM - get-authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"first-token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{docker-system-layer}}/api/jde-atina/get-authorization",
+					"host": [
+						"{{docker-system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DOCKER PROCESS - get-purchase-orders-for-approver",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"entityId\": 92455890\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ngrok-mule-server-id}}/api/jde-atina/get-purchase-orders-for-approver",
+					"host": [
+						"{{ngrok-mule-server-id}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-purchase-orders-for-approver"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL NGROK PROCESS - get-purchase-orders-for-approver",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"entityId\": 92455890\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://8cb1f659.ngrok.io/api/jde-atina/get-purchase-orders-for-approver",
+					"protocol": "http",
+					"host": [
+						"8cb1f659",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-purchase-orders-for-approver"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SYSTEM - Execute WS JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
+						"exec": [
+							"var jsonData = postman.getResponseHeader(\"token\");",
+							"pm.collectionVariables.set(\"first-token\",jsonData );",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTc5MDE2NjUxLCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MTI4NDM5NjEzMywiZXhwIjoxNTc5MDE5NjUxfQ.rw9lUZgN9cDmjRki-T6okZqxABWdVXD5wA9T8YtrWJQ",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"approver\": {\r\n        \"entityTaxId\": \"\",\r\n        \"entityLongId\": \"\",\r\n        \"entityId\": 92455890\r\n    },\r\n    \"orderTypeCode\": \"OP\",\r\n    \"businessUnitCode\": \"         30\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"statusApproval\": \"2N\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{docker-system-layer}}/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+					"host": [
+						"{{docker-system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"post-operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DOCKER SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
+						"exec": [
+							"var jsonData = postman.getResponseHeader(\"token\");",
+							"pm.collectionVariables.set(\"first-token\",jsonData );",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"p43081Version\": \"ZJDE0002\",\r\n  \"businessUnit\": \"          30\",\r\n  \"companyKeyOrderNumber\": \"00001\",\r\n  \"documentType\": \"OP\",\r\n  \"documentNumber\": 5054,\r\n  \"orderSuffix\": \"001\",\r\n  \"remark\": \"REM1\",\r\n  \"statusApproval\": \"2A\",\r\n  \"budgetPassword\": \"\",\r\n  \"amountToApprove\": \"10606.94\",\r\n  \"holdCode\": \"\",\r\n  \"approveReject\": \"A\",\r\n  \"approverAddressNumber\": 1,\r\n  \"lineNumber\": \"1\",\r\n  \"approvalRouteCode\": \"DEMO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{docker-system-layer}}/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"host": [
+						"{{docker-system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"post-operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL SYSTEM - Execute WS JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9430ad5-0479-43b7-a0de-e749563e5aa9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"p43081Version\": \"ZJDE0002\",\r\n  \"businessUnit\": \"          30\",\r\n  \"companyKeyOrderNumber\": \"00001\",\r\n  \"documentType\": \"OP\",\r\n  \"documentNumber\": 5051,\r\n  \"orderSuffix\": \"000\",\r\n  \"remark\": \"REM1\",\r\n  \"statusApproval\": \"2N\",\r\n  \"budgetPassword\": \"\",\r\n  \"amountToApprove\": \"26517.34\",\r\n  \"holdCode\": \"\",\r\n  \"approveReject\": \"A\",\r\n  \"approverAddressNumber\": 1,\r\n  \"approvalRouteCode\": \"DEMO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-system-layer}}/api/jde-atina/post-operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"host": [
+						"{{local-system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"post-operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DOCKER - SYSTEM - get-json-schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63f3e1de-7a5f-4349-bc4b-96b67b20a13d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{docker-system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"host": [
+						"{{docker-system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02 - PROCESS get-authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{valid-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ngrok-mule-server-id}}/api/jde-atina/get-authorization",
+					"host": [
+						"{{ngrok-mule-server-id}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL NGROK PROCESS get-authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{valid-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://8cb1f659.ngrok.io/api/jde-atina/get-authorization",
+					"protocol": "http",
+					"host": [
+						"8cb1f659",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NGROK JDE-MICROSERVER Get domain",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8957fd23-f568-41c0-9f24-f8fa5c3e7813",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"ngrok-jdemicroserver-id\", jsonData.public_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ngrok-jde-microserver}}/api/tunnels/command_line (http)",
+					"host": [
+						"{{ngrok-jde-microserver}}"
+					],
+					"path": [
+						"api",
+						"tunnels",
+						"command_line (http)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "01 - NGROK MULE SERVER Get domain",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8957fd23-f568-41c0-9f24-f8fa5c3e7813",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"ngrok-mule-server-id\", jsonData.public_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ngrok-mule-server}}/api/tunnels/command_line (http)",
+					"host": [
+						"{{ngrok-mule-server}}"
+					],
+					"path": [
+						"api",
+						"tunnels",
+						"command_line (http)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SYSTEM get ws schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63f3e1de-7a5f-4349-bc4b-96b67b20a13d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ngrok-jdemicroserver-id}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"host": [
+						"{{ngrok-jdemicroserver-id}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SYSTEM get ws schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63f3e1de-7a5f-4349-bc4b-96b67b20a13d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.99.100:8088/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04 - PROCESS - purchase-orders-approve-reject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": 5049,\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"REJECT REMARK\",\r\n    \"statusApproval\": \"3A\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": 10606.94,\r\n    \"holdCode\": \"java.lang.String\",\r\n    \"approveReject\": \"A\",\r\n    \"approverAddressNumber\": 92455890,\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ngrok-mule-server-id}}/api/jde-atina/process-purchase-order-approve-reject",
+					"host": [
+						"{{ngrok-mule-server-id}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"process-purchase-order-approve-reject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - PROCESS - get-purchase-order-detail-for-approver",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first-token\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"companyKeyOrderNo\": \"00001\",\r\n    \"documentOrderTypeCode\": \"OP\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"documentOrderInvoiceNumber\": 5049,\r\n    \"documentSuffix\": \"000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ngrok-mule-server-id}}/api/jde-atina/get-purchase-order-detail-for-approver",
+					"host": [
+						"{{ngrok-mule-server-id}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-purchase-order-detail-for-approver"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4b20e110-fd92-493f-8a9f-8bbc6af88541",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "714cf980-85e0-4816-b49e-2ea5fd7230ec",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7e07f715-e412-47bb-afcf-8e0a31507451",
+			"key": "docker-machine-ip",
+			"value": "192.168.99.100",
+			"type": "string"
+		},
+		{
+			"id": "8b84339c-396e-4ebf-9dc9-76bc8ddb7415",
+			"key": "ngrok-mule-server-id",
+			"value": "http://bf00e242.ngrok.io",
+			"type": "string"
+		},
+		{
+			"id": "1ee0653f-69d9-4b80-8bb8-d2770ca6b4df",
+			"key": "first-token",
+			"value": null,
+			"type": "any"
+		},
+		{
+			"id": "813b7ead-5e5a-4abf-8a6c-b693a236ea44",
+			"key": "valid-token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o",
+			"type": "string"
+		},
+		{
+			"id": "d72ec7b3-2982-47fd-a167-3c8cfdacae9e",
+			"key": "ngrok-id-process",
+			"value": "http://192.168.99.100:8084",
+			"type": "string"
+		},
+		{
+			"id": "a417575d-9d48-4401-a6a6-038938b85497",
+			"key": "local-process-layer",
+			"value": "http://localhost:8084",
+			"type": "string"
+		},
+		{
+			"id": "65ce4265-9c8e-4f95-b474-2e37d056bbba",
+			"key": "ngrok-mule-server",
+			"value": "http://192.168.99.100:4041",
+			"type": "string"
+		},
+		{
+			"id": "5bf87fa3-8d9a-4e6a-87bf-e90ffacef1fa",
+			"key": "ngrok-jde-microserver",
+			"value": "http://192.168.99.100:4040",
+			"type": "string"
+		},
+		{
+			"id": "9601daf0-c382-4f42-b0ee-c51c6ed77f2e",
+			"key": "ngrok-jdemicroserver-id",
+			"value": "http://52f0160f.ngrok.io",
+			"type": "string"
+		},
+		{
+			"id": "44c6d819-b3f7-4fc3-aff5-9f60d0c53ea2",
+			"key": "docker-system-layer",
+			"value": "http://192.168.99.100:8088",
+			"type": "string"
+		},
+		{
+			"id": "d9fd01f5-c83e-44ca-a4dd-09b39516d855",
+			"key": "local-system-layer",
+			"value": "http://localhost:8081",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
