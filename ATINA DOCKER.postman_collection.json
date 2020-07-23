@@ -125,7 +125,7 @@
 			"response": []
 		},
 		{
-			"name": "S02 - SYSTEM - get-json-schema - JP410000.InventoryManager.getItemPrice",
+			"name": "S02-01  - SYSTEM - get-json-schema - JP410000.InventoryManager.getItemPrice",
 			"event": [
 				{
 					"listen": "test",
@@ -163,7 +163,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP410000.InventoryManager.getItemPrice",
+					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderV2",
 					"host": [
 						"{{system-layer}}"
 					],
@@ -171,14 +171,14 @@
 						"api",
 						"jde-atina",
 						"get-json-schema",
-						"oracle.e1.bssv.JP410000.InventoryManager.getItemPrice"
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderV2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "S03 - SYSTEM - get-json-schema - JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"name": "S02-02 - SYSTEM - get-json-schema - JP430000.ProcurementManager.processPurchaseOrderApproveReject",
 			"event": [
 				{
 					"listen": "test",
@@ -225,6 +225,112 @@
 						"jde-atina",
 						"get-json-schema",
 						"oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S02-03 - SYSTEM - get-json-schema - JP040000.AccountsPayableManager.processVoucher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24889878-c248-4385-8e9e-0badce22ce91",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S02-04 - SYSTEM - get-json-schema - JP430000.ProcurementManager.processPurchaseOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24970677-4d3d-496d-99f2-7b2162ac81a1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "transactionID",
+						"type": "text",
+						"value": "20200229180140005"
+					}
+				],
+				"url": {
+					"raw": "{{system-layer}}/api/jde-atina/get-json-schema/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrder",
+					"host": [
+						"{{system-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"get-json-schema",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrder"
 					]
 				}
 			},
@@ -583,20 +689,17 @@
 			"response": []
 		},
 		{
-			"name": "P00 - SYSTEM - get-valid-token for JDE",
+			"name": "P00 - PROCESS get-status",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "15441348-d92a-40ce-b753-627c3a7e24e3",
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
 						"exec": [
-							"pm.test(\"Status code is 200\", function() {\r",
-							"  pm.expect(pm.response.code).to.equal(200);\r",
-							"});\r",
-							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {\r",
-							"    var jsonData = JSON.parse(responseBody);\r",
-							"    pm.environment.set(\"first-token\", jsonData.token);\r",
-							"});"
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -604,52 +707,43 @@
 			],
 			"request": {
 				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "transactionID",
-						"type": "text",
-						"value": "20200229180140005"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"JDE User\": \"JDE\",\r\n  \"JDE Password\": \"Modus2020!\",\r\n  \"JDE Environment\": \"JDV920\",\r\n  \"JDE Role\": \"*ALL\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "demo",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "demo",
+							"type": "string"
 						}
-					}
+					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "{{system-layer}}/api/jde-atina/get-token",
+					"raw": "{{process-layer}}/api/jde-atina/status",
 					"host": [
-						"{{system-layer}}"
+						"{{process-layer}}"
 					],
 					"path": [
 						"api",
 						"jde-atina",
-						"get-token"
+						"status"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "P01 - PROCESS get-authorization For JDE User",
+			"name": "P00 - PROCESS get-authorization For JDE User",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"id": "49b7ac46-22a3-4dc2-bce8-1878f17b3f58",
 						"exec": [
 							"pm.test(\"Status code is 200\", function() {",
 							"  pm.expect(pm.response.code).to.equal(200);",
@@ -669,7 +763,7 @@
 					"apikey": [
 						{
 							"key": "value",
-							"value": "{{first-token}}",
+							"value": "{{valid-token}}",
 							"type": "string"
 						},
 						{
@@ -696,12 +790,12 @@
 			"response": []
 		},
 		{
-			"name": "P02 - PROCESS - get-purchase-orders-for-approver",
+			"name": "P01 - PROCESS - Enter PUR Order - JP430000.ProcurementManager.processPurchaseOrder",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"id": "d75e299b-b6c5-4cee-8035-9b9c186e7c5f",
 						"exec": [
 							"pm.test(\"Status code is 200\", function() {",
 							"  pm.expect(pm.response.code).to.equal(200);",
@@ -743,6 +837,152 @@
 				],
 				"body": {
 					"mode": "raw",
+					"raw": "{\r\n    \"header\": {\r\n        \"shipToAddress\": {\r\n            \"address\": {\r\n                \"countyCode\": \"\",\r\n                \"city\": \"\",\r\n                \"countryCode\": \"\",\r\n                \"postalCode\": \"\",\r\n                \"addressLine1\": \"\",\r\n                \"addressLine2\": \"\",\r\n                \"stateCode\": \"\",\r\n                \"addressLine3\": \"\",\r\n                \"addressLine4\": \"\",\r\n                \"mailingName\": \"\"\r\n            },\r\n            \"shipTo\": {\r\n                \"entityTaxId\": \"\",\r\n                \"entityLongId\": \"\",\r\n                \"entityId\": 4343\r\n            }\r\n        },\r\n        \"businessUnit\": \"          30\",\r\n        \"printMessageCode\": \"\",\r\n        \"RMAId\": 0,\r\n        \"userReservedData\": {\r\n            \"userReservedCode\": \"\",\r\n            \"userReservedNumber\": 0,\r\n            \"userReservedReference\": \"\",\r\n            \"userReservedAmount\": 0.0\r\n        },\r\n        \"remark\": \"Remark PO\",\r\n        \"description1\": \"Purchase Order X\",\r\n        \"reference\": \"\",\r\n        \"orderedBy\": \"\",\r\n        \"evaluatedReceiptSettlement\": \"\",\r\n        \"paymentTermsCode\": \"\",\r\n        \"triangulationRateFromCurrency\": 0,\r\n        \"purchaseOrderKey\": {\r\n            \"documentTypeCode\": \"\",\r\n            \"documentNumber\": 0,\r\n            \"documentCompany\": \"\"\r\n        },\r\n        \"currencyCodeFrom\": \"USD\",\r\n        \"isTextAssociated\": false,\r\n        \"holdOrderCode\": \"\",\r\n        \"percentRetainage\": 0.0,\r\n        \"adjustmentScheduleCode\": \"\",\r\n        \"RMAType\": \"\",\r\n        \"supplierAddress\": {\r\n            \"address\": {\r\n                \"countyCode\": \"\",\r\n                \"city\": \"\",\r\n                \"countryCode\": \"\",\r\n                \"postalCode\": \"\",\r\n                \"addressLine1\": \"\",\r\n                \"addressLine2\": \"\",\r\n                \"stateCode\": \"\",\r\n                \"addressLine3\": \"\",\r\n                \"addressLine4\": \"\",\r\n                \"mailingName\": \"\"\r\n            },\r\n            \"supplier\": {\r\n                \"entityTaxId\": \"\",\r\n                \"entityLongId\": \"\",\r\n                \"entityId\": 4343\r\n            } \r\n        },\r\n        \"delivery\": {\r\n            \"deliveryInstruction1\": \"\",\r\n            \"carrier\": {\r\n                \"entityTaxId\": \"\",\r\n                \"entityLongId\": \"\",\r\n                \"entityId\": 0\r\n            },\r\n           \r\n            \"landedCostRuleCode\": \"\",\r\n            \"freightHandlingCode\": \"\",\r\n            \"deliveryInstruction2\": \"\"\r\n        },\r\n        \"printAIADocument\": \"\",\r\n        \"sendMethodCode\": \"\",\r\n        \"orderTakenBy\": \"\",\r\n        \"changeOrderNumber\":0,\r\n        \"dates\": {\r\n            \"dateCancel\": \"\",\r\n            \"dateOrdered\": \"2020-07-01\",\r\n            \"dateRequested\": \"2020-07-01\",\r\n            \"datePromisedDelivery\": \"\"\r\n        },\r\n        \"tax\": {\r\n            \"taxExplanationCode\": \"\",\r\n            \"taxExemptCertificate\": \"\",\r\n            \"taxRateAreaCode\": \"\"\r\n        },\r\n        \"supplierSO\": \"\",\r\n        \"supplierPriceGroupCode\": \"\",\r\n        \"buyer\": {\r\n            \"entityTaxId\": \"\",\r\n            \"entityLongId\": \"\",\r\n            \"entityId\": 0\r\n        },\r\n        \"rateExchangeOverride\": 0.0,\r\n        \"currencyCodeTo\": \"USD\",\r\n        \"processing\": {\r\n            \"actionType\": \"\",\r\n            \"processingVersion\": \"ZJDE0001\"\r\n        },\r\n        \"detail\": [\r\n            {\r\n                \"businessUnit\": \"          30\",\r\n                \"matrixControlLine\": 0.0,\r\n                \"printMessageCode\": \"\",\r\n                \"RMAId\": 0,\r\n                \"originalOrderLineKey\": {\r\n                    \"documentTypeCode\": \"\",\r\n                    \"documentLineNumber\": 0.0,\r\n                    \"documentNumber\": \"\",\r\n                    \"documentCompany\": \"\",\r\n                    \"documentSuffix\": \"\"\r\n                },\r\n                \"unitVolume\": 0.0,\r\n                \"costExtended\": 0.0,\r\n                \"datesDetail\": {\r\n                    \"dateAccounting\": \"\",\r\n                    \"dateCancel\": \"\",\r\n                    \"dateRequested\": \"\",\r\n                    \"datePromisedDelivery\": \"\",\r\n                    \"dateEffectiveLot\": \"\"\r\n                },\r\n                \"project\": {\r\n                    \"projectNumber\": 0,\r\n                    \"taskOrderType\": \"\",\r\n                    \"taskOrderNumber\": 0\r\n                },\r\n                \"priceLevel\": \"\",\r\n                \"promotionId\": \"\",\r\n                \"reference\": \"\",\r\n                \"quantityOrderedSecondary\": 0.0,\r\n                \"agreementSupplement\": 0,\r\n                \"freezeWorkOrder\": \"\",\r\n                \"unitOfMeasureCodeTransaction\": \"\",\r\n                \"adjustmentScheduleCode\": \"\",\r\n                \"RMAType\": \"\",\r\n                \"unitOfMeasureCodePurchasing\": \"\",\r\n                \"commodityClassCode\": \"\",\r\n                \"transferDirectShip\": \"\",\r\n                \"costObjectTypeCode1\": \"\",\r\n                \"costObjectTypeCode2\": \"\",\r\n                \"buyer\": {\r\n                    \"entityTaxId\": \"\",\r\n                    \"entityLongId\": \"\",\r\n                    \"entityId\": 0\r\n                },\r\n                \"reportingCodesPurchasing\": {\r\n                    \"purchasingReportCode002\": \"\",\r\n                    \"purchasingReportCode001\": \"\",\r\n                    \"purchasingReportCode004\": \"\",\r\n                    \"purchasingReportCode003\": \"\"\r\n                },\r\n                \"UNSPSCCode\": \"\",\r\n                \"deliveryDetail\": {\r\n                    \"carrier\": {\r\n                        \"entityTaxId\": \"\",\r\n                        \"entityLongId\": \"\",\r\n                        \"entityId\": 0\r\n                    },\r\n                    \"modeOfTransportCode\": \"\",\r\n                    \"landedCostRuleCode\": \"\",\r\n                    \"freightHandlingCode\": \"\"\r\n                },\r\n                \"relatedOrderLineKey\": {\r\n                    \"documentTypeCode\": \"\",\r\n                    \"documentLineNumber\": 0.0,\r\n                    \"documentNumber\": \"\",\r\n                    \"documentCompany\": \"\",\r\n                    \"documentSuffix\": \"\"\r\n                },\r\n                \"discountFactor\": 0.0,\r\n                \"relievePOBlanketOrder\": \"\",\r\n                \"costObjectCode4\": \"\",\r\n                \"unitWeight\": 0.0,\r\n                \"costObjectCode3\": \"\",\r\n                \"costObjectCode2\": \"\",\r\n                \"costObjectCode1\": \"\",\r\n                \"adjustmentRevisionLevel\": 0,\r\n                \"financialDetail\": {\r\n                    \"glAccountKey\": {\r\n                        \"accountId\": \"\",\r\n                        \"accountLongId\": \"\",\r\n                        \"accountAlternate\": \"\"\r\n                    },\r\n                    \"assetId\": \"\",\r\n                    \"glClassCode\": \"\",\r\n                    \"subledgerTypeCode\": \"\",\r\n                    \"subledger\": \"\",\r\n                    \"glAccount\": {\r\n                        \"businessUnit\": \"\",\r\n                        \"objectAccount\": \"\",\r\n                        \"subsidiary\": \"\"\r\n                    }\r\n                },\r\n                \"statusCodeNext\": \"\",\r\n                \"userReservedData\": {\r\n                    \"userReservedCode\": \"\", \r\n                    \"userReservedNumber\": 0,\r\n                    \"userReservedReference\": \"\",\r\n                    \"userReservedAmount\": 0.0\r\n                },\r\n                \"reference1\": \"\",\r\n                \"quantityOrdered\": 10000.0,\r\n                \"costUnitPurchasing\": 0.0,\r\n                \"purchaseOrderLineKey\": {\r\n                    \"documentLineNumber\": 0.0,\r\n                    \"documentSuffix\": \"\"\r\n                },\r\n                \"costObjectTypeCode3\": \"\",\r\n                \"costObjectTypeCode4\": \"\",\r\n                \"taxDetail\": {\r\n                    \"taxExplanationCode\": \"\",\r\n                    \"taxableCode\": \"\",\r\n                    \"taxRateAreaCode\": \"\"\r\n                },\r\n                \"agreementId\": \"\",\r\n                \"unitOfMeasureCodeVolume\": \"\",\r\n                \"product\": {\r\n                    \"item\": {\r\n                        \"itemId\": 0,\r\n                        \"itemProduct\": \"CARBURETOR\",\r\n                        \"itemCatalog\": \"\",\r\n                        \"itemFreeForm\": \"\",\r\n                        \"itemSupplier\": \"\"\r\n                    },\r\n                    \"locationPrimary\": \"\",\r\n                    \"lotNumber\": \"\",\r\n                    \"lineTypeCode\": \"\",\r\n                    \"description2\": \"\",\r\n                    \"description1\": \"\"\r\n                },\r\n                \"transactionOriginator\": \"\",\r\n                \"unitOfMeasureCodeWeight\": \"\",\r\n                \"supplierSO\": \"\",\r\n                \"statusCodeLast\": \"\",\r\n                \"actionType\": \"\",\r\n                \"shipmentId\": 0,\r\n                \"unitOfMeasureCodeSecondary\": \"\",\r\n                \"shipTo\": {\r\n                    \"entityTaxId\": \"\",\r\n                    \"entityLongId\": \"\",\r\n                    \"entityId\": 4343\r\n                }\r\n            }\r\n        ],\r\n        \"triangulationRateToCurrency\": 0,\r\n        \"approvalRouteCode\": \"DEMO\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrder",
+					"host": [
+						"{{process-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P01 - PROCESS - Get  PUR Order - JP430000.ProcurementManager.getPurchaseOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a36bdff3-2a5a-4b77-b4d5-6d82b5d047b3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"header\": {\r\n        \r\n        \"purchaseOrderKey\": {\r\n            \"documentTypeCode\": \"OP\",\r\n            \"documentNumber\": 5056,\r\n            \"documentCompany\": \"00001\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrder",
+					"host": [
+						"{{process-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P02 - PROCESS - Get PUR Order for Aprrover - JP430000.ProcurementManager.getPurchaseOrdersForApprover",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74dbcd95-0377-46d7-ac2e-922ec753ec8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    pm.environment.set(\"order-mcu\", jsonData.purchaseOrdersForApproverResults[0].businessUnitCode);",
+							"    pm.environment.set(\"order-doco\", jsonData.purchaseOrdersForApproverResults[0].documentOrderInvoiceNumber);",
+							"    pm.environment.set(\"order-kcoo\", jsonData.purchaseOrdersForApproverResults[0].documentCompanyKeyOrderNo);",
+							"    pm.environment.set(\"order-dcto\", jsonData.purchaseOrdersForApproverResults[0].documentOrderTypeCode);",
+							"    pm.environment.set(\"order-ag\", jsonData.purchaseOrdersForApproverResults[0].amountGross);",
+							"    pm.environment.set(\"order-approver\", jsonData.purchaseOrdersForApproverResults[0].approver.entityId);",
+							"    pm.environment.set(\"order-routing-code\", jsonData.purchaseOrdersForApproverResults[0].approvalRoutingCodePurchaseOrder);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
 					"raw": "{\r\n    \"approver\": {\r\n        \"entityTaxId\": \"\",\r\n        \"entityLongId\": \"\",\r\n        \"entityId\": 92455890\r\n    },\r\n    \"orderTypeCode\": \"OP\",\r\n    \"businessUnitCode\": \"         30\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"statusApproval\": \"2N\"\r\n}",
 					"options": {
 						"raw": {
@@ -751,12 +991,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
-					"protocol": "http",
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrdersForApprover",
 					"host": [
-						"localhost"
+						"{{process-layer}}"
 					],
-					"port": "8084",
 					"path": [
 						"api",
 						"jde-atina",
@@ -768,7 +1006,7 @@
 			"response": []
 		},
 		{
-			"name": "P03 - PROCESS - oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
+			"name": "P03 - PROCESS - Get PUR Order Detail for Approver - JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
 			"event": [
 				{
 					"listen": "test",
@@ -815,7 +1053,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"companyKeyOrderNo\": \"00001\",\r\n    \"documentOrderTypeCode\": \"OP\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"documentOrderInvoiceNumber\": 5054,\r\n    \"documentSuffix\": \"000\"\r\n}",
+					"raw": "{\r\n    \"companyKeyOrderNo\": \"{{order-kcoo}}\",\r\n    \"documentOrderTypeCode\": \"{{order-dcto}}\",\r\n    \"statusCodeNext\": \"230\",\r\n    \"documentOrderInvoiceNumber\": {{order-doco}},\r\n    \"documentSuffix\": \"000\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -823,12 +1061,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
-					"protocol": "http",
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.getPurchaseOrderDetailForApprover",
 					"host": [
-						"localhost"
+						"{{process-layer}}"
 					],
-					"port": "8084",
 					"path": [
 						"api",
 						"jde-atina",
@@ -840,7 +1076,7 @@
 			"response": []
 		},
 		{
-			"name": "P04 - PROCESS - APRROVE - oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"name": "P04 - PROCESS - PUR Order APRROVE -JP430000.ProcurementManager.processPurchaseOrderApproveReject",
 			"event": [
 				{
 					"listen": "test",
@@ -887,7 +1123,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": \"5056\",\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Aprovado\",\r\n    \"statusApproval\": \"2A\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": 1052106.00,\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"A\",\r\n    \"approverAddressNumber\": \"92455890\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"OP\",\r\n            \"orderNumber\": 5056,\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado1\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"00001\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}\r\n",
+					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"{{order-mcu}}\",\r\n    \"companyKeyOrderNumber\": \"{{order-kcoo}}\",\r\n    \"documentType\": \"{{order-dcto}}\",\r\n    \"documentNumber\": {{order-doco}},\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Aprovado\",\r\n    \"statusApproval\": \"2A\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": {{order-ag}},\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"A\",\r\n    \"approverAddressNumber\": \"{{order-approver}}\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"{{order-dcto}}\",\r\n            \"orderNumber\": {{order-doco}},\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado1\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"{{order-kcoo}}\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"{{order-routing-code}}\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -895,12 +1131,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
-					"protocol": "http",
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
 					"host": [
-						"localhost"
+						"{{process-layer}}"
 					],
-					"port": "8084",
 					"path": [
 						"api",
 						"jde-atina",
@@ -912,7 +1146,7 @@
 			"response": []
 		},
 		{
-			"name": "P05 - PROCESS - REJECT- oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
+			"name": "P05 - PROCESS - PUR Order REJECT- JP430000.ProcurementManager.processPurchaseOrderApproveReject",
 			"event": [
 				{
 					"listen": "test",
@@ -959,7 +1193,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"          30\",\r\n    \"companyKeyOrderNumber\": \"00001\",\r\n    \"documentType\": \"OP\",\r\n    \"documentNumber\": \"5054\",\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Rejected\",\r\n    \"statusApproval\": \"2N\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": 876755.00,\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"R\",\r\n    \"approverAddressNumber\": \"92455890\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"OP\",\r\n            \"orderNumber\": 5041,\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"00001\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"DEMO\"\r\n}\r\n",
+					"raw": "{\r\n    \"p43081Version\": \"ZJDE0002\",\r\n    \"businessUnit\": \"{{order-mcu}}\",\r\n    \"companyKeyOrderNumber\": \"{{order-kcoo}}\",\r\n    \"documentType\": \"{{order-dcto}}\",\r\n    \"documentNumber\": {{order-doco}},\r\n    \"orderSuffix\": \"000\",\r\n    \"remark\": \"Rejected\",\r\n    \"statusApproval\": \"2N\",\r\n    \"budgetPassword\": \"\",\r\n    \"amountToApprove\": {{order-ag}},\r\n    \"holdCode\": \"\",\r\n    \"approveReject\": \"R\",\r\n    \"approverAddressNumber\": \"{{order-approver}}\",\r\n    \"detail\": [\r\n        {\r\n            \"orderType\": \"{{order-dcto}}\",\r\n            \"orderNumber\": {{order-doco}},\r\n            \"userReasonCode3\": \"\",\r\n            \"userReasonCode2\": \"\",\r\n            \"orderSuffix\": \"000\",\r\n            \"userReasonCode1\": \"\",\r\n            \"associatedText\": \"\",\r\n            \"userReasonCode7\": \"\",\r\n            \"userReasonCode6\": \"\",\r\n            \"remark\": \"Aprovado\",\r\n            \"userReasonCode5\": \"\",\r\n            \"userReasonCode4\": \"\",\r\n            \"requiredAction\": \"\",\r\n            \"userReasonCode8\": \"\",\r\n            \"rowNotFoundFlag\": \"\",\r\n            \"orderCompany\": \"{{order-kcoo}}\",\r\n            \"lineNumber\": 1.0\r\n        }\r\n    ],\r\n    \"lineNumber\": 1.0,\r\n    \"approvalRouteCode\": \"{{order-routing-code}}\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -967,17 +1201,85 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
-					"protocol": "http",
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject",
 					"host": [
-						"localhost"
+						"{{process-layer}}"
 					],
-					"port": "8084",
 					"path": [
 						"api",
 						"jde-atina",
 						"operation",
 						"oracle.e1.bssv.JP430000.ProcurementManager.processPurchaseOrderApproveReject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "P06 - PROCESS - ADD AP VOUCHER - JP040000.AccountsPayableManager.processVoucher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ac34724-21e9-4d76-ab76-920e61520fee",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    pm.environment.set(\"first-token\", postman.getResponseHeader(\"token\") );",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{first-token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"processVoucherHeader\": {\r\n        \"supplierInvoiceNumber\": \"10010211\",\r\n        \"approver\": {\r\n            \"entityTaxId\": \"\",\r\n            \"entityLongId\": \"\",\r\n            \"entityId\": 0\r\n        },\r\n        \"businessUnit\": \"           1\",\r\n        \"voucherKey\": {\r\n            \"documentTypeCode\": \"PV\",\r\n            \"documentNumber\": 0,\r\n            \"documentCompany\": \"00001\"\r\n        },\r\n        \"remark\": \"Remark\",\r\n        \"paymentInstrumentcode\": \"\",\r\n        \"dateInvoice\": \"2020-04-23\",\r\n        \"dateAccounting\": \"2020-04-23\",\r\n        \"paymentTermsCode\": \"\",\r\n        \"purchaseOrderKey\": {\r\n            \"documentTypeCode\": \"\",\r\n            \"documentNumber\": \"\",\r\n            \"documentCompany\": \"\"\r\n        },\r\n        \"supplier\": {\r\n            \"entityTaxId\": \"\",\r\n            \"entityLongId\": \"\",\r\n            \"entityId\": 4319\r\n        },\r\n        \"processing\": {\r\n            \"actionType\": \"A\",\r\n            \"processingVersionGeneralLedger\": \"ZJDE0001\",\r\n            \"processingVersion\": \"ZJDE0001\"\r\n        },\r\n        \"company\": \"00001\",\r\n        \"rateExchange\": 0.0,\r\n        \"processVoucherDetail\": {\r\n            \"voucher\": [\r\n                {\r\n                    \"amountDiscountTakenDomestic\": 0.0,\r\n                    \"frequencyRecurring\": \"\",\r\n                    \"glOffsetCode\": \"\",\r\n                    \"voucherKeyLine\": {\r\n                        \"documentPayItemExtension\": 0,\r\n                        \"documentPayItem\": \"001\"\r\n                    },\r\n                    \"userReservedData\": {\r\n                        \"userReservedCode\": \"\",\r\n                        \"userReservedNumber\": 0,\r\n                        \"userReservedReference\": \"\",\r\n                        \"userReservedAmount\": 0.0\r\n                    },\r\n                    \"remark\": \"Remark\",\r\n                    \"amountDiscountAvailableDomestic\": 0.0,\r\n                    \"amountTaxNonRecoverableDomestic\": 0.0,\r\n                    \"amountGrossDomestic\": 10000.00,\r\n                    \"frequencyRecurringNumberOfPayments\": 0,\r\n                    \"payee\": {\r\n                        \"entityTaxId\": \"\",\r\n                        \"entityLongId\": \"\",\r\n                        \"entityId\": 4319\r\n                    },\r\n                    \"amountTaxDomestic\": 0.0,\r\n                    \"amountGrossForeign\": 0.0,\r\n                    \"taxExplanationCode\": \"\",\r\n                    \"paymentTermsCode\": \"\",\r\n                    \"purchaseOrderKey\": {\r\n                        \"documentTypeCode\": \"\",\r\n                        \"documentNumber\": \"\",\r\n                        \"documentCompany\": \"\"\r\n                    },\r\n                    \"amountNonTaxableForeign\": 0.0,\r\n                    \"taxRateAreaCode\": \"\",\r\n                    \"amountTaxableForeign\": 0.0,\r\n                    \"amountDiscountAvailableForeign\": 0.0,\r\n                    \"amountDiscountTakenForeign\": 0.0,\r\n                    \"amountTaxNonRecoverableForeign\": 0.0,\r\n                    \"statusCodePay\": \"\",\r\n                    \"amountNonTaxableDomestic\": 0.0,\r\n                    \"amountTaxForeign\": 0.0,\r\n                    \"amountTaxableDomestic\": 0.0\r\n                }\r\n            ],\r\n            \"glDistribution\": [\r\n                {\r\n                    \"reference\": \"\",\r\n                    \"glAccountKey\": {\r\n                        \"accountId\": \"\",\r\n                        \"accountLongId\": \"\",\r\n                        \"accountAlternate\": \"\"\r\n                    },\r\n                    \"documentLineNumber\": 0,\r\n                    \"nameExplanationRemark\": \"GL Remark\",\r\n                    \"assetId\": \"\",\r\n                    \"glPostCodes\": {\r\n                        \"postCodeAlternate9\": \"\",\r\n                        \"postCodeAlternate7\": \"\",\r\n                        \"postCodeAlternate8\": \"\",\r\n                        \"postCodeAlternate5\": \"\",\r\n                        \"postCodeAlternate6\": \"\",\r\n                        \"postCodeAlternate3\": \"\",\r\n                        \"postCodeAlternate4\": \"\",\r\n                        \"postCodeAlternate1\": \"\",\r\n                        \"postCodeAlternate2\": \"\",\r\n                        \"postCodeAlternate0\": \"\"\r\n                    },\r\n                    \"subledger\": {\r\n                        \"subledgerTypeCode\": \"\",\r\n                        \"subledger\": \"\"\r\n                    },\r\n                    \"amountForeign\": 0.0,\r\n                    \"glAccount\": {\r\n                        \"businessUnit\": \"           1\",\r\n                        \"objectAccount\": \"1110\",\r\n                        \"subsidiary\": \"AUTOBKST\"\r\n                    },\r\n                    \"glCostObjects\": {\r\n                        \"costObjectCode4\": \"\",\r\n                        \"costObjectCode3\": \"\",\r\n                        \"costObjectCode2\": \"\",\r\n                        \"costObjectTypeCode3\": \"\",\r\n                        \"costObjectCode1\": \"\",\r\n                        \"costObjectTypeCode4\": \"\",\r\n                        \"costObjectTypeCode1\": \"\",\r\n                        \"costObjectTypeCode2\": \"\"\r\n                    },\r\n                    \"amountDomestic\": 10000.0\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{process-layer}}/api/jde-atina/operation/oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher",
+					"host": [
+						"{{process-layer}}"
+					],
+					"path": [
+						"api",
+						"jde-atina",
+						"operation",
+						"oracle.e1.bssv.JP040000.AccountsPayableManager.processVoucher"
 					]
 				}
 			},
@@ -1033,6 +1335,7 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function() {",
 							"  pm.environment.set(\"process-layer\", \"http://localhost:8084\");",
+							"  pm.environment.set(\"system-layer-layer\", \"http://localhost:8081\");",
 							"  pm.expect(pm.response.code).to.equal(200);",
 							"});",
 							"(pm.response.code===200 ? pm.test : pm.test.skip)(\"Response body is empty\", function () {",
@@ -1089,62 +1392,62 @@
 	],
 	"variable": [
 		{
-			"id": "0dd51743-2b26-4767-8e61-78808269dd28",
+			"id": "e0837bf1-ed20-4ab8-ac58-25d356b83d31",
 			"key": "docker-machine-ip",
 			"value": "192.168.99.100"
 		},
 		{
-			"id": "491d8a93-e17d-4cda-8080-e7101c69119f",
+			"id": "426a64f1-a61c-4fc8-920d-198c8b4aef9a",
 			"key": "ngrok-mule-server-id",
 			"value": "http://df9d346a.ngrok.io"
 		},
 		{
-			"id": "cffe33d0-b4f7-4312-9c9f-4c304dc437f3",
+			"id": "9f39454a-1ce3-4cc6-90c5-f3020c656ad9",
 			"key": "first-token",
 			"value": null
 		},
 		{
-			"id": "122a36df-8e4c-48dc-98b4-2fe261217f87",
+			"id": "ffa4960e-298a-4dde-822f-e4c017566b15",
 			"key": "valid-token",
 			"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMjMxMjMxIiwiaWF0IjoxNTcyNDQ3Nzc0LCJzdWIiOiJTdWJqZWN0IiwiaXNzIjoiSXNzdWUiLCJ1c2VyIjoiSkRFIiwicGFzc3dvcmQiOiJNb2R1czIwMTchIiwiZW52aXJvbm1lbnQiOiJKRFY5MjAiLCJyb2xlIjoiKkFMTCIsInNlc3Npb25JZCI6MH0.u9olIwWVsyCQnEPz2q0ngr1Kny24RqcRCU23xHFvr3o"
 		},
 		{
-			"id": "9bb2919a-70f2-4307-b208-58b55958b70c",
+			"id": "ea580a6d-929f-4092-b21e-9c4acb5f7d0a",
 			"key": "ngrok-id-process",
 			"value": "http://192.168.99.100:8084"
 		},
 		{
-			"id": "01650fd1-6e75-4309-8c3d-53daecc6b02e",
+			"id": "704f8bcd-eeb9-4529-a9cf-aa2ef803336a",
 			"key": "local-process-layer",
 			"value": "http://localhost:8084"
 		},
 		{
-			"id": "e66a9d07-8121-4199-af6a-b1d6522ead15",
+			"id": "4ef3c783-9e4f-4cf1-a3de-0f2483536962",
 			"key": "ngrok-mule-server",
 			"value": "http://192.168.99.100:4041"
 		},
 		{
-			"id": "56bba758-73a6-4368-9c77-4089f4d0c1c7",
+			"id": "3e281e3b-3999-4ce6-bdd7-971945c7cfc3",
 			"key": "ngrok-jde-microserver",
 			"value": "http://192.168.99.100:4040"
 		},
 		{
-			"id": "d1ba86c1-9b61-4e80-ac1e-5f150a041cd9",
+			"id": "cdcc4beb-7704-4013-bed8-1abed4069866",
 			"key": "ngrok-jdemicroserver-id",
-			"value": "http://aee1c5f3.ngrok.io"
+			"value": "http://92e637d90339.ngrok.io"
 		},
 		{
-			"id": "733edb21-fbe0-433f-bbf2-bd72d9e5b155",
+			"id": "0001817d-2ea2-483a-b391-613b5ec60fd2",
 			"key": "docker-system-layer",
 			"value": "http://192.168.99.100:8088"
 		},
 		{
-			"id": "ea0dbf7d-90e0-48a3-a4cd-02f40f00cefa",
+			"id": "444add6b-0b89-444f-b3af-0d1fa14f9a9c",
 			"key": "local-system-layer",
 			"value": "http://localhost:8081"
 		},
 		{
-			"id": "b89ee50d-6bff-4bdd-a7f6-9ac143302ee5",
+			"id": "3cb19b6b-e482-48e0-a6a6-d9eb56220cbc",
 			"key": "process-layer",
 			"value": "http://df9d346a.ngrok.io"
 		}
