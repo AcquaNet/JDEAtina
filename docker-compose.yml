@@ -30,7 +30,7 @@ services:
     restart: always
     networks:
       atinacloud:
-        ipv4_address: 172.33.0.1      
+        ipv4_address: 172.40.0.1      
         
   jde-mule-server:
     image: 92455890/jde-mule-server:1.0.0
@@ -66,7 +66,7 @@ services:
     user: root  
     networks:
       atinacloud:
-        ipv4_address: 172.33.0.2
+        ipv4_address: 172.40.0.2
         
   graphite-server:
     image: kamon/grafana_graphite
@@ -83,7 +83,7 @@ services:
     user: root
     networks:
       atinacloud:
-        ipv4_address: 172.33.0.3
+        ipv4_address: 172.40.0.3
     restart: always
     
 networks:
@@ -91,5 +91,5 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.33.0.0/16
-         gateway: 172.33.0.1    
+       - subnet: 172.40.0.0/16
+         gateway: 172.40.0.1    
