@@ -23,7 +23,7 @@ services:
       JDE_MICROSERVER_MOCKING: ${JDE_MICROSERVER_MOCKING}
     container_name: jdeatina-microserver
     ports:
-     - "${JDE_MICROSERVER_PORT}:${JDE_MICROSERVER_PORT}"
+     - "8093:8077"
     volumes:
      - /tmp/jde-microserver:/tmp/jde
     user: root
