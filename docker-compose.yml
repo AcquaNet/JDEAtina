@@ -82,9 +82,9 @@ services:
     container_name: jde-graphite-server
     user: root
     networks:
-      integradornet:
+      atinacloud:
         ipv4_address: 172.33.0.3
-    restart: always        
+    restart: always
     
 networks:
   atinacloud:
