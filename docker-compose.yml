@@ -28,15 +28,3 @@ services:
      - /tmp/jde-microserver:/tmp/jde
     user: root
     restart: always
-    networks:
-      atinacloud:
-        ipv4_address: 172.40.0.1      
-         
-    
-networks:
-  atinacloud:
-    driver: bridge
-    ipam:
-     config:
-       - subnet: 172.40.0.0/16
-         gateway: 172.40.0.1    
