@@ -28,7 +28,7 @@ services:
     ports:
      - "8083:8083"
      - "8084:8084"
-     - "8089:8081"
+     - "8092:8081"
      - "8161:8161"
     volumes:
      - /tmp/docker/jde-mule-server:/opt/mule/mule-standalone-390
